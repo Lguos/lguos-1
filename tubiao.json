@@ -1,0 +1,11 @@
+{"name":"Emby Icons", 
+"description":"By xxx", 
+"icons":[
+    {"name":"peach", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/Emby111.png"},
+    {"name":"peach1", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/Emby22.png"},
+    {"name":"peach2", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/BDD22.png"},
+    {"name":"orange", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/BDD3.png"},
+    {"name":"magpie", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/CC.png"},
+    {"name":"captain", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons2/CC9.png"}
+]
+}
