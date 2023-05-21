@@ -1,6 +1,6 @@
-"name":"Emby Icons", 
+{"name":"Emby Icons", 
 "description":"By lguos", 
-{"icons":[
+"icons":[
     {"name":"peach_Y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach_Y.PNG"},
     {"name":"peach_Y1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach_Y1.PNG"},
     {"name":"peach_Y2", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach_Y2.PNG"},
