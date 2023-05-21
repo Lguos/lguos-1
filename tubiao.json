@@ -2,8 +2,8 @@
 "description":"By xxx", 
 "icons":[
     {"name":"peach", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach.PNG"},
-    {"name":"peach1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach public.PNG"},
-    {"name":"peach2", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach private.PNG"},
+    {"name":"peach1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach%20public.PNG"},
+    {"name":"peach2", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach%20private.PNG"},
     {"name":"orange", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/orange.PNG"},
     {"name":"magpie", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/magpie.PNG"},
     {"name":"captain", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/captainZ.JPG"}
