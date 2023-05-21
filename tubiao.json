@@ -1,11 +1,11 @@
 {"name":"Emby Icons", 
 "description":"By xxx", 
 "icons":[
-    {"name":"peach", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/Emby111.png"},
-    {"name":"peach1", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/Emby22.png"},
-    {"name":"peach2", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/BDD22.png"},
-    {"name":"orange", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/BDD3.png"},
-    {"name":"magpie", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons/CC.png"},
-    {"name":"captain", "url":"https://raw.githubusercontent.com/Twoandz9/Emby-icons/main/Icons2/CC9.png"}
+    {"name":"peach", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach.PNG"},
+    {"name":"peach1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach public.PNG"},
+    {"name":"peach2", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/peach private.PNG"},
+    {"name":"orange", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/orange.PNG"},
+    {"name":"magpie", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/magpie.PNG"},
+    {"name":"captain", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icon/captainZ.JPG"}
 ]
 }
