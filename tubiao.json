@@ -16,6 +16,8 @@
     {"name":"CC_Y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/CC_Y.PNG"},
     {"name":"CC_F", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/CC_F.png"},
     {"name":"judog_Y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/judog_Y.PNG"},
-    {"name":"judog_F", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/judog_F.png"}
+    {"name":"judog_F", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/judog_F.png"},
+    {"name":"JMS_Y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/JMS_Y.PNG"},
+    {"name":"JMS_F", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/JMS_F.png"}
 ]
 }
