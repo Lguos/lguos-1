@@ -1,6 +1,12 @@
 {"name":"Emby Icons", 
 "description":"随缘更新", 
 "icons":[
+    {"name":"peach-y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach-y.PNG"},
+    {"name":"peach-y1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach-y1.PNG"},
+    {"name":"peach-y2", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach-y2.PNG"},
+    {"name":"peach-f", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach-f.png"},
+    {"name":"peach-f1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach-f1.png"},
+    {"name":"peach-f2", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach-f2.png"},
     {"name":"peach_y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach_y.PNG"},
     {"name":"peach_f", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/peach_f.png"},
     {"name":"orange_y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/orange_y.PNG"},
