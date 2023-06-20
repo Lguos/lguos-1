@@ -39,5 +39,9 @@
     {"name":"gugu_f", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/gugu_f.png"},
     {"name":"gugu_y1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/gugu_y1.PNG"},
     {"name":"gugu_f1", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/gugu_f1.png"},
+    {"name":"tecar_y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/tecar_y.PNG"},
+    {"name":"tecar_f", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/tecar_f.png"},
+    {"name":"tecar-y", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/tecar-y.PNG"},
+    {"name":"tecar-f", "url":"https://raw.githubusercontent.com/Lguos/lguos-1/master/icons/tecar-f.png"},
 ]
 }
