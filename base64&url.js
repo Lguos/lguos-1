@@ -1,3 +1,8 @@
+// author: lguos
+// name: 编解码.js
+// data: 2024-11-06
+// 使用: 在字符串前加"编"和"解"
+
 function base64Encode(str) {
   const utf8Bytes = unescape(encodeURIComponent(str));
   let output = '';
