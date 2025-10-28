@@ -1,72 +1,33 @@
+// ========================
+// DeepSeek + 小鹤音形查询整合版
+// ========================
+// author: lguos
+// date: 2025-10-29
+// 注意：请在脚本中的变量管理中添加 deepseek_key 变量，值为 DeepSeek 的 API Key
+
 const DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1/chat/completions";
 const DEFAULT_MODEL = "deepseek-chat";
 
-// 判断输入类型（单字、词语、成语、特殊输入法）
+const queryText = ($searchText || $pasteboardContent || "").trim();
+/**
+ * 判断输入类型（单字、词语、成语）
+ */
 function detectQueryType(text) {
   if (!text) return "未知";
-
-  const clean = text.trim().replace(/[^\u4e00-\u9fa5（）()]/g, "");
-
-  if (/（?小鹤）?|\(小鹤\)/.test(text)) return "单字-小鹤音形";
-  if (/（?虎码）?|\(虎码\)/.test(text)) return "单字-虎码";
-
-  const pure = clean.replace(/[（）]/g, "");
-  if (pure.length === 1) return "单字";
-  if (pure.length === 4) return "成语";
-  if (pure.length > 1) return "词语";
+  const clean = text.trim().replace(/[^\u4e00-\u9fa5]/g, "");
+  if (clean.length === 1) return "单字";
+  if (clean.length === 4) return "成语";
+  if (clean.length > 1) return "词语";
   return "未知";
 }
-
-// 构造提示内容
+/**
+ * 构建 DeepSeek Prompt
+ */
 function buildPrompt(text, type) {
   switch (type) {
-    case "单字-小鹤音形": {
-      const match = text.match(/([\u4e00-\u9fa5])/);
-      const char = match ? match[1] : text;
-      return `请查询汉字「${char}」在【小鹤音形输入法】中的完整编码信息。
-小鹤音形是一种【双拼+形码】输入法，请提供以下内容：
-
-输出格式如下，请严格照此排版：
-${char}：<完整小鹤音形编码>
-● 拆分：<详细字形拆分，用空格分隔部件>
-● 首末：<首末部件>
-● 形码：<形码部分，仅形码，不含音码>
-
-要求：
-1. 返回的编码为【小鹤音形方案】标准结果。
-2. 格式必须与示例完全一致：
-菅：kdcb
-● 拆分：艹 比左 匕 白
-● 首末：艹白
-● 形码：cb
-3. 不要添加任何解释。`;
-    }
-
-    case "单字-虎码": {
-      const match = text.match(/([\u4e00-\u9fa5])/);
-      const char = match ? match[1] : text;
-      return `请查询汉字「${char}」在【虎码输入法】中的编码信息。
-虎码是一种基于部件拆分的形码输入法，请提供以下内容：
-
-输出格式如下，请严格照此排版：
-${char}：<完整虎码编码>
-● 拆分：<详细字形拆分，用空格分隔部件>
-● 首末：<首末部件>
-● 形码：<形码部分>
-
-要求：
-1. 使用【虎码输入法】的正式拆分与编码规则。
-2. 格式必须与示例完全一致：
-蒈：aibg
-● 拆分：艹 比左 几 白
-● 首末：艹白
-● 形码：ibg
-3. 不添加额外注释或说明。`;
-    }
-
     case "单字":
       return `请查询汉字「${text}」的详细信息，按以下格式返回：
-[拼音]：
+[拼音]：如果该汉字是多音字，请在拼音字段中显示所有读音，用逗号分隔，例如 "kàn,kān"
 [部首]：
 [总笔画]：
 [结构]：
@@ -78,7 +39,7 @@ ${char}：<完整虎码编码>
 [反义词]：
 [异体字]：
 [基本解释]：
-请严格按照以上字段输出。`;
+请严格按照以上字段输出，不要增加额外文字。`;
 
     case "词语":
       return `请查询词语「${text}」的详细信息，按以下格式返回：
@@ -112,12 +73,13 @@ ${char}：<完整虎码编码>
   }
 }
 
-async function deepseekQuery(query) {
-  const type = detectQueryType(query);
-  const prompt = buildPrompt(query, type);
-
-  const systemPrompt = `你是一个精通中文语言学与输入法编码的专家，熟悉小鹤音形、虎码、五笔、仓颉等方案。
-请根据用户输入智能识别类型（单字、词语、成语或输入法查询），严格按指定格式输出结果，不添加多余说明。`;
+/**
+ * DeepSeek 查询
+ */
+async function deepseekQuery(text) {
+  const type = detectQueryType(text);
+  const prompt = buildPrompt(text, type);
+  const systemPrompt = `你是一个专业的中文语言知识助手，擅长查询汉字、词语、成语等语言信息，请根据用户输入的类型输出规范格式结果。`;
 
   const body = {
     model: DEFAULT_MODEL,
@@ -125,7 +87,7 @@ async function deepseekQuery(query) {
       { role: "system", content: systemPrompt },
       { role: "user", content: prompt }
     ],
-    temperature: 0.6,
+    temperature: 0.8,
     max_tokens: 1024
   };
 
@@ -141,23 +103,116 @@ async function deepseekQuery(query) {
       timeout: 30
     });
 
-    const statusCode = resp.response.statusCode;
-    if (statusCode !== 200) throw new Error(`HTTP状态码 ${statusCode}`);
+    if (resp.response.statusCode !== 200)
+      throw new Error(`HTTP状态码 ${resp.response.statusCode}`);
 
-    const parsedData = JSON.parse(resp.data);
-    if (!parsedData.choices?.length) throw new Error("返回数据格式异常");
+    const parsed =
+      typeof resp.data === "string" ? JSON.parse(resp.data) : resp.data;
+    if (!parsed.choices?.length) throw new Error("返回数据格式异常");
 
-    return parsedData.choices[0].message.content.trim();
-  } catch (error) {
-    $log(`❌ DeepSeek API 错误: ${error.message || error}`);
-    if (error.response) {
-      $log(`响应详情: ${JSON.stringify(error.response)}`);
-    }
-    return `查询失败：${error.message || "未知错误"}`;
+    return parsed.choices[0].message.content.trim();
+  } catch (err) {
+    $log(`❌ DeepSeek 错误: ${err.message || err}`);
+    return `查询失败：${err.message || "未知错误"}`;
   }
 }
 
+/**
+ * 校验单字输入
+ */
+function validateSingleChar(char) {
+  if (!char || typeof char !== "string" || char.length !== 1) {
+    return "请输入单个汉字进行小鹤查询";
+  }
+  if (!/^[\u4e00-\u9fa5]$/.test(char)) {
+    return "不支持非汉字查询";
+  }
+  return true;
+}
+
+/**
+ * 获取 MD5 签名（使用 hashify.net）
+ */
+async function getMD5(char) {
+  const url = `https://api.hashify.net/hash/md5/hex?value=${encodeURIComponent(
+    "fjc_xhup" + char
+  )}`;
+  try {
+    const resp = await $http({ url });
+    if (!resp) throw new Error("请求返回为空");
+
+    let json;
+    if (typeof resp.data === "string") {
+      json = JSON.parse(resp.data);
+    } else {
+      json = resp.data;
+    }
+
+    if (!json || !json.Digest) throw new Error("返回数据缺少 Digest 字段");
+
+    return json.Digest;
+  } catch (err) {
+    $log("获取 MD5 出错:", err);
+    throw new Error(`获取 MD5 出错：${err.message || err}`);
+  }
+}
+
+/**
+ * 小鹤音形查询
+ */
+async function xiaoheQuery(char) {
+  const valid = validateSingleChar(char);
+  if (valid !== true) return valid;
+
+  try {
+    const md5 = await getMD5(char);
+    const url = "http://www.xhup.club/Xhup/Search/searchCode";
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Origin": "http://react.xhup.club",
+      "Referer": "http://react.xhup.club/search",
+      "User-Agent": "Mozilla/5.0"
+    };
+    const body = { search_word: char, sign: md5 };
+
+    const resp = await $http({ url, method: "POST", header: headers, body });
+    if (!resp || !resp.data) throw new Error("查询返回为空");
+
+    const json =
+      typeof resp.data === "string" ? JSON.parse(resp.data) : resp.data;
+    if (!json.list_dz) throw new Error("接口未返回 list_dz");
+
+    const arr = json.list_dz.toString().split(",");
+    const lineOne = arr[0];
+    const lineTwo = `● 拆分：${arr[1]}`;
+    const lineThree = `● 首末：${arr[2]}${arr[3]}`;
+    const lineFour = `● 编码：${arr[4]}${arr[5]}`;
+    const note1 = "注：-号表示已有简码避让全码，*号表示生僻字&音";
+    const note2 = "数据来源：xhup.club";
+
+    return [lineOne, lineTwo, lineThree, lineFour, note1, note2].join("\n");
+  } catch (err) {
+    $log("小鹤查询错误:", err);
+    return `查询失败：${err.message || "未知错误"}`;
+  }
+}
+
+/**
+ * 主函数
+ */
 async function output() {
-  const query = $searchText || $pasteboardContent || "你好";
-  return await deepseekQuery(query);
+  if (!queryText) {
+    
+    return "请输入查询的汉字，词语，成语\n小鹤音形查询方式: \"汉字(小鹤)\"";
+  }
+
+  // 检查是否为小鹤查询格式：字(小鹤)
+  const match = queryText.match(/^(.{1})\(小鹤\)$/);
+  if (match) {
+    const char = match[1];
+    return await xiaoheQuery(char);
+  }
+
+  // 否则走 DeepSeek 查询
+  return await deepseekQuery(queryText);
 }
