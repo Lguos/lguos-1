@@ -202,17 +202,17 @@ async function xiaoheQuery(char) {
  */
 async function output() {
   if (!queryText) {
-    
     return "请输入查询的汉字，词语，成语\n小鹤音形查询方式: \"汉字(小鹤)\"";
   }
-
-  // 检查是否为小鹤查询格式：字(小鹤)
+  const chineseOnly = queryText.replace(/[^\u4e00-\u9fa5\(\)小鹤]/g, "");
+  if (chineseOnly.length === 0) {
+    return "不支持的语言，请输入汉字";
+  }
   const match = queryText.match(/^(.{1})\(小鹤\)$/);
   if (match) {
     const char = match[1];
     return await xiaoheQuery(char);
   }
 
-  // 否则走 DeepSeek 查询
   return await deepseekQuery(queryText);
 }
